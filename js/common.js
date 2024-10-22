@@ -1,0 +1,107 @@
+import workItemArr from "./data.js"; // 포폴 데이터
+
+const bg = document.querySelector(".bg");
+const workList = document.querySelector("ul.workList"); // 포폴리스트 ul.workList
+const bar = document.querySelector(".bar");
+const stickyElem = document.querySelector(".sticky");
+const stickyElemParent = stickyElem.parentElement;
+
+let scrollY = 0, 
+    percent = 0,
+    mouseX = 0,
+    targetX = 0,
+    mouseY = 0,
+    targetY = 0;
+let stickyElemParentY = stickyElemParent.offsetTop;
+
+
+
+// body에 마우스 이벤트
+document.body.addEventListener("mousemove", (e) => {
+    mouseX = e.pageX;
+    mouseY = e.pageY;
+
+    bg.style.top = `${-(mouseY / 10000 * 5)}vh`
+});
+
+// 포폴 데이터 리스트
+workItemArr.forEach((item)=> {
+    let workItem = document.createElement("li");
+    workItem.classList.add("workItem");
+    workItem.innerHTML = `
+        <a href="${item.link}" target="_blank">
+            <img class="workImg" src="./img/${item.img}" alt="${item.name}" />
+            <div class="workDesc">
+                <h3>${item.name}</h3>
+                <p>작업연도 : ${item.year}년</p>
+                <p>소요기간 : ${item.period}</p>
+                <p>사용스킬 : ${item.skill}</p>
+                <p>플러그인 : ${item.plugin}</p>
+                <p>기여도 : 100%</p>
+            </div>
+        </a>
+    `
+
+    workList.prepend(workItem);
+});
+
+
+// 포폴 리스트 & bar 가로 스크롤
+window.addEventListener("scroll", ()=>{
+    scrollY = window.scrollY;
+
+    if ( stickyElem.getBoundingClientRect().top == 0 ) {
+        percent = (((scrollY - stickyElemParentY) / stickyElemParent.clientHeight) * 100).toFixed(0);
+        console.log(percent)
+        workList.style.transform = `translate3d(${-percent}%, 0, 0)`;
+        bar.style.width = `${((scrollY - stickyElemParentY) / stickyElemParent.clientHeight) * 100}%`;
+    } else if ( stickyElem.getBoundingClientRect().top > 0 ) {
+        workList.style.transform = `translate3d(0,0,0)`;
+        bar.style.width = `0`;
+    } else {
+        workList.style.transform = `translate3d(-100%,0,0)`;
+        bar.style.width = `100%`;
+    }
+});
+
+
+// 포폴 리스트 설명칸 애니메이션 방향 체크.
+const workItem = document.querySelectorAll(".workItem");
+const dirClassArr = ["in-left", "in-right", "out-left", "out-right"]; // 방향 클래스 리스트
+let prevX = 0 // 이전 clientX 값
+let delay = 100; // 방향 체크 주기
+
+for( let i = 0; i < workItem.length; i++ ){
+    workItem[i].addEventListener("mouseenter", (e) => {
+        const xDir = prevX <= e.pageX ? "in-right" : "in-left";
+
+        setTimeout(()=> {
+            prevX = e.pageX;
+        }, delay)
+        
+        if (xDir == "in-left") { // 오른쪽 -> 왼쪽 마우스 이동하면서 진입
+            workItem[i].classList.remove(...dirClassArr);
+            workItem[i].classList.add("in-left");
+        } else { // 왼쪽 -> 오른쪽 마우스 이동하면서 진입
+            workItem[i].classList.remove(...dirClassArr);
+            workItem[i].classList.add("in-right");
+        }
+
+    });
+    workItem[i].addEventListener("mouseleave", (e) => {
+        const xDir = prevX <= e.pageX ? "out-right" : "out-left";
+
+        setTimeout(()=> {
+            prevX = e.pageX;
+        }, delay)
+        
+        if (xDir == "out-left") { // 오른쪽 -> 왼쪽 마우스 이동하면서 나감
+            workItem[i].classList.remove(...dirClassArr);
+            workItem[i].classList.add(xDir);
+        } else { // 왼쪽 -> 오른쪽 마우스 이동하면서 나감
+            workItem[i].classList.remove(...dirClassArr);
+            workItem[i].classList.add(xDir);
+        }
+
+    });
+}

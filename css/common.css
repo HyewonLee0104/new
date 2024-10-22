@@ -1,0 +1,286 @@
+@import url(./reset.css);
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Noto+Sans+KR:wght@100..900&display=swap');
+
+html {
+    font-size: 18px;
+    font-family: "Noto Sans KR", sans-serif;
+
+}
+
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    background: rgb(132,232,252);
+    background: linear-gradient(144deg, rgba(132,232,252,1) 0%, rgba(188,188,240,1) 35%, rgba(107,132,152,1) 63%, rgba(2,0,36,1) 100%);
+}
+
+.bg {
+    position:fixed;
+    top: -5vh;
+    left: -5%;
+    width: 110%;
+    height: 110vh;
+    background: url(../img/noisy-background.jpg);
+    background-size: cover;
+    mix-blend-mode: soft-light;    
+}
+
+
+header {
+    width: 100%;
+    height: 500px;
+}
+
+main {
+    width: 100%;
+    font-size: 30px;
+}
+
+footer {
+    width: 100%;
+    height: 3000px;
+}
+
+/* 공통 */
+
+.inner {
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    max-width: 1800px;
+}
+
+
+
+section.work {
+    height: 200vh;
+}
+.workWrapper {
+    padding: 10vh 0;
+    overflow: hidden;
+}
+.sectionTit {
+    font-family: "Abril Fatface", serif;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    color: black;
+}
+.sticky {
+    position: sticky;
+    top: 0;
+}
+.workList {
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    padding: 2rem;
+    transform: translate3d(0,0,0);
+    transition: all .2s linear;
+    filter: saturate(30%);
+}
+.workItem {
+    position: relative;
+    flex: 0 0 auto;
+    width: 30vw;
+    min-width: 300px;
+    transform: perspective(400px);
+}
+.workItem:not(:last-child) {
+    margin-right: 2rem;
+}
+.workItem::before {
+    content: '';
+    display: block;
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    border: 4px solid black;
+}
+.workImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 9 / 6;
+}
+.workDesc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: 1;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 2rem 1rem;
+    color: white;
+    font-size: 1rem;
+    background: rgba(0,0,0,0.8);
+    transform: perspective(400px) rotateY(90deg);
+    transform-origin: left;
+    animation-duration: .3s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+.workDesc h3 {
+    padding-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.workItem.in-left .workDesc {
+    transform-origin: right;
+    animation-name: in-left;
+}
+.workItem.in-right .workDesc {
+    transform-origin: left;
+    animation-name: in-right;
+
+}
+
+.workItem.out-left .workDesc{
+    transform-origin: left;
+    animation-name: out-left;
+}
+.workItem.out-right .workDesc{
+    transform-origin: right;
+    animation-name: out-right;
+}
+
+@keyframes in-left {
+    from {
+        transform: perspective(400px) rotateY(-90deg);
+    }
+    to {
+        transform: perspective(400px) rotateY(0deg);
+    }
+}
+
+@keyframes in-right {
+    from {
+        transform: perspective(400px) rotateY(90deg);
+    }
+    to {
+        transform: perspective(400px) rotateY(0deg);
+    }
+}
+
+@keyframes out-left {
+    from {
+        transform: perspective(400px) rotateY(0deg);
+    }
+    to {
+        transform: perspective(400px) rotateY(90deg);
+    }
+}
+
+@keyframes out-right {
+    from {
+        transform: perspective(400px) rotateY(0deg);
+    }
+    to {
+        transform: perspective(400px) rotateY(-90deg);
+    }
+}
+
+
+.barWrapper {
+    display: flex;
+    align-items: center;
+}
+.barWrapper .guide {
+    font-size: 1.2rem;
+    padding-right: 1rem;
+    flex-shrink: 0;
+}
+.barWrapper .bar {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: black;
+    transition: all .3s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.particle {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    background: white;
+    mix-blend-mode: soft-light;
+    border-radius: 50%;
+}
+.particle:nth-child(2) {
+    top: 60%;
+    background: pink;
+}
+
+
+
+@keyframes out-left {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (orientation: portrait) {
+
+}
+
+@media (max-width: 1200px) {
+    html {
+        font-size: 16px;
+    }
+}
+@media (max-width: 1024px) {
+    html {
+        font-size: 15px;
+    }
+}
+@media (max-width: 890px) {
+    html {
+        font-size: 14px;
+    }
+}
+@media (max-width: 787px) {
+    html {
+        font-size: 13px;
+    }
+}
+@media (max-width: 575px) {
+    html {
+        font-size: 12px;
+    }
+}
+@media (max-width: 415px) {
+    html {
+        font-size: 11px;
+    }
+}
+@media (max-width: 320px) {
+    html {
+        font-size: 10px;
+    }
+}
+
