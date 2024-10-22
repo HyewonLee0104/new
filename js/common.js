@@ -40,6 +40,11 @@ window.addEventListener("scroll", ()=>{
     scrollY = window.scrollY;
 
     if ( stickyElem.getBoundingClientRect().top == 0 ) {
+        let newP = document.createElement("p");
+        newP.innerHTML = (scrollY - stickyElemParentY) / stickyElemParent.clientHeight ;
+        stickyElem.appendChild(newP);
+
+
         percent = (((scrollY - stickyElemParentY) / stickyElemParent.clientHeight) * 100).toFixed(0);
         workList.style.transform = `translate3d(${-percent}%, 0, 0)`;
         bar.style.width = `${((scrollY - stickyElemParentY) / stickyElemParent.clientHeight) * 100}%`;
