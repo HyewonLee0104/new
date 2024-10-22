@@ -89,7 +89,7 @@ section.work {
     width: max-content;
     padding: 2rem;
     transform: translateX(0);
-    transition: all .5s linear;
+    /* transition: all .5s linear; */
     filter: saturate(30%);
 }
 .workItem {
