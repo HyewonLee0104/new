@@ -4,7 +4,6 @@
 html {
     font-size: 18px;
     font-family: "Noto Sans KR", sans-serif;
-
 }
 
 
@@ -26,6 +25,7 @@ body {
     background: url(../img/noisy-background.jpg);
     background-size: cover;
     mix-blend-mode: soft-light;    
+    z-index: -1;
 }
 
 
@@ -41,7 +41,11 @@ main {
 
 footer {
     width: 100%;
-    height: 3000px;
+}
+.copyright {
+    padding: 1vh 2vh;
+    color: white;
+    text-align: right;
 }
 
 /* 공통 */
@@ -55,13 +59,18 @@ footer {
 
 
 section.work {
-    height: 200vh;
+    height: 300vh;
 }
 .workWrapper {
-    padding: 10vh 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
 }
 .sectionTit {
+    padding: 2rem 1rem;
     font-family: "Abril Fatface", serif;
     font-size: 3rem;
     font-weight: 700;
@@ -75,10 +84,10 @@ section.work {
 .workList {
     display: flex;
     flex-wrap: nowrap;
+    align-self: flex-start;
     width: max-content;
     padding: 2rem;
     transform: translate3d(0,0,0);
-    transition: all .2s linear;
     filter: saturate(30%);
 }
 .workItem {
@@ -189,63 +198,86 @@ section.work {
 }
 
 
-.barWrapper {
+.scrollGuide {
     display: flex;
+    flex-shrink: 0;
     align-items: center;
+    width: 50%;
 }
-.barWrapper .guide {
+.scrollGuide .guide {
     font-size: 1.2rem;
     padding-right: 1rem;
+    font-weight: 700;
     flex-shrink: 0;
 }
-.barWrapper .bar {
+
+
+.barBox {
     display: block;
     width: 100%;
-    height: 1px;
+    height: 2px;
+    background: rgba(255,255,255,.3);
+}
+.bar {
+    display: block;
+    width: 100%;
+    height: 100%;
     background: black;
     transition: all .3s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
 .particle {
     position: fixed;
-    top: 50%;
-    left: 0;
-    width: 100px;
-    height: 100px;
+    top: 105%;
     background: white;
     mix-blend-mode: soft-light;
     border-radius: 50%;
-}
-.particle:nth-child(2) {
-    top: 60%;
-    background: pink;
-}
 
 
-
-@keyframes out-left {
-
+    animation-name: particle-move1;
+    animation-direction: normal;
+    animation-iteration-count: infinite;
+    animation-duration: 5s;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@keyframes particle-move1 {
+    0% {
+        top: 105%;
+        transform: translateX(-180%);
+    }
+    35% {
+        transform: translateX(300%);
+    }
+    70% {
+        transform: translateX(-200%);
+    }
+    100% {
+        top: -5%;
+        transform: translateX(100%);
+    }
+}
+@keyframes particle-move2 {
+    0% {
+        top: 105%;
+        transform: translateX(200%);
+    }
+    35% {
+        transform: translateX(-160%);
+    }
+    70% {
+        transform: translateX(100%);
+    }
+    100% {
+        top: -5%;
+        transform: translateX(-80%);
+    }
+}
 
 
 @media (orientation: portrait) {
-
+    .workItem {
+        width: 54vw;
+    }
 }
 
 @media (max-width: 1200px) {

@@ -1,10 +1,10 @@
 import workItemArr from "./data.js"; // 포폴 데이터
 
-const bg = document.querySelector(".bg");
+// 포폴 데이터 리스트
 const workList = document.querySelector("ul.workList"); // 포폴리스트 ul.workList
-const bar = document.querySelector(".bar");
 const stickyElem = document.querySelector(".sticky");
 const stickyElemParent = stickyElem.parentElement;
+const bar = document.querySelector(".bar");
 
 let scrollY = 0, 
     percent = 0,
@@ -14,17 +14,6 @@ let scrollY = 0,
     targetY = 0;
 let stickyElemParentY = stickyElemParent.offsetTop;
 
-
-
-// body에 마우스 이벤트
-document.body.addEventListener("mousemove", (e) => {
-    mouseX = e.pageX;
-    mouseY = e.pageY;
-
-    bg.style.top = `${-(mouseY / 10000 * 5)}vh`
-});
-
-// 포폴 데이터 리스트
 workItemArr.forEach((item)=> {
     let workItem = document.createElement("li");
     workItem.classList.add("workItem");
@@ -52,7 +41,6 @@ window.addEventListener("scroll", ()=>{
 
     if ( stickyElem.getBoundingClientRect().top == 0 ) {
         percent = (((scrollY - stickyElemParentY) / stickyElemParent.clientHeight) * 100).toFixed(0);
-        console.log(percent)
         workList.style.transform = `translate3d(${-percent}%, 0, 0)`;
         bar.style.width = `${((scrollY - stickyElemParentY) / stickyElemParent.clientHeight) * 100}%`;
     } else if ( stickyElem.getBoundingClientRect().top > 0 ) {
@@ -105,3 +93,44 @@ for( let i = 0; i < workItem.length; i++ ){
 
     });
 }
+
+
+// particle 애니메이션
+const particleWrapper = document.querySelector(".particleWrapper");
+let particleNum = 30;
+
+const getRandomColor = () => {
+    let letters = '0123456789ABCDEF',
+        color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+};
+const getRandomNumber = (min, max) => {
+    let randomNumber = Math.floor(Math.random()*(max-min+1) + min);
+    return randomNumber;
+};
+
+for (let i = 0; i < particleNum; i++) {
+    let size = getRandomNumber(4, 16),
+        positionL = getRandomNumber(30, 100),
+        animationName = `particle-move${getRandomNumber(1,2)}`,
+        duration = getRandomNumber(15, 30),
+        delay = getRandomNumber(0, 9);
+
+    let newDiv = document.createElement("div");
+    newDiv.classList.add("particle");
+
+    newDiv.style.width = `${size}px`;
+    newDiv.style.height = `${size}px`;
+    newDiv.style.backgroundColor = `${getRandomColor()}`;
+    newDiv.style.left = `${positionL}%`;
+
+    newDiv.style.animationName = `${animationName}`;
+    newDiv.style.animationDuration = `${duration}s`;
+    newDiv.style.animationDelay = `${delay}s`
+
+    particleWrapper.appendChild(newDiv);
+}
+
