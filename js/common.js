@@ -2,17 +2,9 @@ import workItemArr from "./data.js"; // 포폴 데이터
 
 // 포폴 데이터 리스트
 const workList = document.querySelector("ul.workList"); // 포폴리스트 ul.workList
-const stickyElem = document.querySelector(".sticky");
+const stickyElem = document.querySelector(".workWrapper");
 const stickyElemParent = stickyElem.parentElement;
 const bar = document.querySelector(".bar");
-
-let scrollY = 0, 
-    percent = 0,
-    mouseX = 0,
-    targetX = 0,
-    mouseY = 0,
-    targetY = 0;
-let stickyElemParentY = stickyElemParent.offsetTop;
 
 workItemArr.forEach((item)=> {
     let workItem = document.createElement("li");
@@ -36,23 +28,39 @@ workItemArr.forEach((item)=> {
 
 
 // 포폴 리스트 & bar 가로 스크롤
-window.addEventListener("scroll", ()=>{
+
+let scrollY = 0, 
+    percent = 0,
+    mouseX = 0,
+    targetX = 0,
+    mouseY = 0,
+    targetY = 0;
+let stickyElemParentY = stickyElemParent.offsetTop,
+    stickyElemParentHeight =  stickyElemParent.clientHeight,
+    fixedLength = stickyElemParentY + stickyElemParentHeight - window.innerHeight;
+
+window.addEventListener("resize", () => {
+    stickyElemParentY = stickyElemParent.offsetTop;
+    stickyElemParentHeight =  stickyElemParent.clientHeight;
+    fixedLength = stickyElemParentY + stickyElemParentHeight - window.innerHeight;
+})
+
+window.addEventListener("scroll", () => {
     scrollY = window.scrollY;
 
-    if ( stickyElem.getBoundingClientRect().top == 0 ) {
-        let newP = document.createElement("p");
-        newP.innerHTML = (scrollY - stickyElemParentY) / stickyElemParent.clientHeight ;
-        stickyElem.appendChild(newP);
+    if ( scrollY >= stickyElemParentY && scrollY < fixedLength) {
+        percent = (((scrollY - stickyElemParentY) / stickyElemParentHeight) * 100).toFixed(0);
 
-
-        percent = (((scrollY - stickyElemParentY) / stickyElemParent.clientHeight) * 100).toFixed(0);
-        workList.style.transform = `translate3d(${-percent}%, 0, 0)`;
-        bar.style.width = `${((scrollY - stickyElemParentY) / stickyElemParent.clientHeight) * 100}%`;
-    } else if ( stickyElem.getBoundingClientRect().top > 0 ) {
-        workList.style.transform = `translate3d(0,0,0)`;
+        stickyElem.style.position = 'fixed';
+        workList.style.transform = `translateX(${-percent}%)`;
+        bar.style.width = `${((scrollY - stickyElemParentY) / stickyElemParentHeight) * 100}%`;
+    } else if ( scrollY < stickyElemParentY ) {
+        stickyElem.style.position = 'relative';
+        workList.style.transform = `translateX(0)`;
         bar.style.width = `0`;
     } else {
-        workList.style.transform = `translate3d(-100%,0,0)`;
+        stickyElem.style.position = 'sticky';
+        workList.style.transform = `translateX(-100%)`;
         bar.style.width = `100%`;
     }
 });
