@@ -68,10 +68,10 @@ section.work {
     left: 0;
     right: 0;
     height: 100vh;
-    /* display: flex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; */
+    align-items: center;
     overflow: hidden;
 }
 .sectionTit {
@@ -89,7 +89,7 @@ section.work {
     width: max-content;
     padding: 2rem;
     transform: translateX(0);
-    /* transition: all .5s linear; */
+    transition: all .1s linear;
     filter: saturate(30%);
 }
 .workItem {
