@@ -37,23 +37,25 @@ let scrollY = 0,
     targetY = 0;
 let stickyElemParentY = stickyElemParent.offsetTop,
     stickyElemParentHeight =  stickyElemParent.clientHeight,
-    fixedLength = stickyElemParentY + stickyElemParentHeight - window.innerHeight;
+    windowHeight = window.innerHeight,
+    fixedLength = stickyElemParentY + stickyElemParentHeight - windowHeight;
 
 window.addEventListener("resize", () => {
     stickyElemParentY = stickyElemParent.offsetTop;
     stickyElemParentHeight =  stickyElemParent.clientHeight;
-    fixedLength = stickyElemParentY + stickyElemParentHeight - window.innerHeight;
+    windowHeight = window.innerHeight;
+    fixedLength = stickyElemParentY + stickyElemParentHeight - windowHeight;
 })
 
 window.addEventListener("scroll", () => {
     scrollY = window.scrollY;
 
     if ( scrollY >= stickyElemParentY && scrollY < fixedLength) {
-        percent = (((scrollY - stickyElemParentY) / stickyElemParentHeight) * 100).toFixed(0);
+        percent = (( (scrollY - stickyElemParentY) / fixedLength) * 100).toFixed(0);
 
         stickyElem.style.position = 'fixed';
         workList.style.transform = `translateX(${-percent}%)`;
-        bar.style.width = `${((scrollY - stickyElemParentY) / stickyElemParentHeight) * 100}%`;
+        bar.style.width = `${percent}%`;
     } else if ( scrollY < stickyElemParentY ) {
         stickyElem.style.position = 'relative';
         workList.style.transform = `translateX(0)`;
