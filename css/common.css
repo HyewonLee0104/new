@@ -68,10 +68,10 @@ section.work {
     left: 0;
     right: 0;
     height: 100vh;
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     overflow: hidden;
 }
 .sectionTit {
