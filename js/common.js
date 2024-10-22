@@ -60,7 +60,6 @@ window.addEventListener("scroll", () => {
         bar.style.width = `0`;
     } else {
         stickyElem.style.position = 'sticky';
-        workList.style.transform = `translateX(-100%)`;
         bar.style.width = `100%`;
     }
 });
